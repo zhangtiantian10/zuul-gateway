@@ -8,10 +8,10 @@ zuul:
       path: /users/**
       url: http://127.0.0.1:8081
       strip-prefix: false
-    login-service:
-      path: /login
-      url: http://127.0.0.1:8081
-      strip-prefix: false
+#    login-service:
+#      path: /login
+#      url: http://127.0.0.1:8081
+#      strip-prefix: false
     todo-service:
       path: /todos/**
       url: http://127.0.0.1:8082

@@ -8,4 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface UserFeign {
     @PostMapping("/validate")
     User validateUser(User user);
+
+    @PostMapping("/login")
+    User login(User user);
 }
