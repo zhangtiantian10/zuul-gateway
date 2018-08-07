@@ -1,7 +1,7 @@
 package com.thoughtworks.zhangtian.training.zuul.tools;
 
 import com.google.common.collect.ImmutableList;
-import com.thoughtworks.zhangtian.training.zuul.dot.User;
+import com.thoughtworks.zhangtian.training.zuul.dto.User;
 import org.springframework.security.web.savedrequest.Enumerator;
 
 import javax.servlet.http.HttpServletRequest;

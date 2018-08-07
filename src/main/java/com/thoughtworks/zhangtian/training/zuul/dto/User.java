@@ -1,6 +1,5 @@
-package com.thoughtworks.zhangtian.training.zuul.dot;
+package com.thoughtworks.zhangtian.training.zuul.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
