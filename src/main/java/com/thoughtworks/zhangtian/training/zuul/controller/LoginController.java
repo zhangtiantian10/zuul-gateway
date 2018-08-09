@@ -22,16 +22,16 @@ public class LoginController {
     @Autowired
     private TokenGenerate tokenGenerate;
 
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user) throws UnsupportedEncodingException {
-        User loginUser = userFeign.login(user);
-        if (loginUser != null) {
-            String token = tokenGenerate.getToken(loginUser);
-            Map<String, String> result = new HashMap<>();
-            result.put("token", token);
-            return ResponseEntity.ok(result);
-        }
-
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity login(@RequestBody User user) throws UnsupportedEncodingException {
+//        User loginUser = userFeign.login(user);
+//        if (loginUser != null) {
+//            String token = tokenGenerate.getToken(loginUser);
+//            Map<String, String> result = new HashMap<>();
+//            result.put("token", token);
+//            return ResponseEntity.ok(result);
+//        }
+//
+//        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//    }
 }

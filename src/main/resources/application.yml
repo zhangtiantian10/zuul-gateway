@@ -1,24 +1,46 @@
 server:
   port: 8080
   context-path: /api
+spring:
+  application:
+    name: zuul-service
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /api/health
+        instanceId: ${spring.application.name}:${random.int}
+
+#user-service:
+#  ribbon:
+#    listOfServers: http://127.0.0.1:8081, http://127.0.0.1:8001
+#todo-service:
+#  ribbon:
+#    listOfServers: http://127.0.0.1:8082, http://127.0.0.1:8002
+
 zuul:
   sensitiveHeaders:
   routes:
     user-service:
       path: /users/**
-      url: http://127.0.0.1:8081
+      serviceId: user-service
       strip-prefix: false
-#    login-service:
-#      path: /login
-#      url: http://127.0.0.1:8081
-#      strip-prefix: false
+    validate:
+      path: /validate/**
+      serviceId: user-service
+      strip-prefix: false
+    login-service:
+      path: /login
+      serviceId: user-service
+      strip-prefix: false
     todo-service:
       path: /todos/**
-      url: http://127.0.0.1:8082
+      serviceId: todo-service
       strip-prefix: false
     task-service:
       path: /tasks/**
-      url: http://127.0.0.1:8082
+      serviceId: todo-service
       strip-prefix: false
 
 logging:
