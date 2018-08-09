@@ -1,23 +1,26 @@
 server:
   port: 8080
   context-path: /api
-spring:
-  application:
-    name: zuul-service
-  cloud:
-    consul:
-      host: consul
-      port: 8500
-      discovery:
-        health-check-path: /api/health
-        instanceId: ${spring.application.name}:${random.int}
+#spring:
+#  application:
+#    name: zuul-service
+#  cloud:
+#    consul:
+#      host: consul
+#      port: 8500
+#      discovery:
+#        health-check-path: /api/health
+#        instanceId: ${spring.application.name}:${random.int}
 
-#user-service:
-#  ribbon:
-#    listOfServers: http://127.0.0.1:8081, http://127.0.0.1:8001
-#todo-service:
-#  ribbon:
-#    listOfServers: http://127.0.0.1:8082, http://127.0.0.1:8002
+user-service:
+  ribbon:
+    listOfServers: user-service:8081
+todo-service:
+  ribbon:
+    listOfServers: todo-service:8082
+
+eureka:
+  instance:
 
 zuul:
   sensitiveHeaders:
@@ -52,3 +55,7 @@ logging:
 
 private:
   password: zhangtian
+
+hystrix:
+  dashboard:
+    init-parameters: /api

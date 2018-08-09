@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/users", "/login", "/validate").permitAll()
-                .antMatchers("/health").permitAll()
+                .antMatchers("/health", "/hystrix*/**", "/webjars/**", "/proxy*").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(todoAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint);
