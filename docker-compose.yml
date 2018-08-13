@@ -1,0 +1,121 @@
+version: '3'
+services:
+  mysql:
+    image: coney/mysql:5
+    container_name: mysql
+    ports:
+      - 3306:3306
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    environment:
+      - LANG=C.UTF-8
+      - TERM=dumb
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=todo
+      - MYSQL_PASSWORD=password
+      - MYSQL_USER=root
+    networks:
+      todo:
+        aliases:
+          - mysql
+  config-server:
+    image: ittianbao/config-server:1
+    ports:
+      - 8090:8090
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    networks:
+      todo:
+        aliases:
+          - config-server
+  user-service:
+    image: ittianbao/user-service:1
+    ports:
+      - 8081:8081
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints: [node.role == worker]
+    depends_on:
+      - mysql
+      - config-server
+    networks:
+      todo:
+        aliases:
+          - user-service
+  todo-service:
+    image: ittianbao/todo-service:1
+    ports:
+      - 8082:8082
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints: [node.role == worker]
+    depends_on:
+      - mysql
+      - config-server
+    networks:
+      todo:
+        aliases:
+          - todo-service
+  zuul:
+    image: ittianbao/zuul:1
+    ports:
+      - 8080:8080
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      placement:
+        constraints: [node.role == worker]
+    depends_on:
+      - config-server
+    networks:
+      todo:
+        aliases:
+          - zuul
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8083:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      todo:
+        aliases:
+          - visualizer
+networks:
+  todo:

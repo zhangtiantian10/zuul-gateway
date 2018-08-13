@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: zuul-service
+  cloud:
+    config:
+      fail-fast: true
+      uri: http://config-server:8090/

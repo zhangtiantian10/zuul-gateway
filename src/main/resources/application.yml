@@ -1,6 +1,6 @@
 server:
-  port: 8080
   context-path: /api
+#  port: 8080
 #spring:
 #  application:
 #    name: zuul-service
@@ -11,47 +11,44 @@ server:
 #      discovery:
 #        health-check-path: /api/health
 #        instanceId: ${spring.application.name}:${random.int}
-
-user-service:
-  ribbon:
-    listOfServers: user-service:8081
-todo-service:
-  ribbon:
-    listOfServers: todo-service:8082
-
-eureka:
-  instance:
-
-zuul:
-  sensitiveHeaders:
-  routes:
-    user-service:
-      path: /users/**
-      serviceId: user-service
-      strip-prefix: false
-    validate:
-      path: /validate/**
-      serviceId: user-service
-      strip-prefix: false
-    login-service:
-      path: /login
-      serviceId: user-service
-      strip-prefix: false
-    todo-service:
-      path: /todos/**
-      serviceId: todo-service
-      strip-prefix: false
-    task-service:
-      path: /tasks/**
-      serviceId: todo-service
-      strip-prefix: false
-
-logging:
-  level:
-    org:
-      springframework:
-        cloud:
-          netflix: TRACE
+#
+#user-service:
+#  ribbon:
+#    listOfServers: user-service:8081
+#todo-service:
+#  ribbon:
+#    listOfServers: todo-service:8082
+#
+#zuul:
+#  sensitiveHeaders:
+#  routes:
+#    user-service:
+#      path: /users/**
+#      serviceId: user-service
+#      strip-prefix: false
+#    validate:
+#      path: /validate/**
+#      serviceId: user-service
+#      strip-prefix: false
+#    login-service:
+#      path: /login
+#      serviceId: user-service
+#      strip-prefix: false
+#    todo-service:
+#      path: /todos/**
+#      serviceId: todo-service
+#      strip-prefix: false
+#    task-service:
+#      path: /tasks/**
+#      serviceId: todo-service
+#      strip-prefix: false
+#
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        cloud:
+#          netflix: TRACE
 
 private:
   password: zhangtian
